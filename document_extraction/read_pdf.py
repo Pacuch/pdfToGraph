@@ -1,7 +1,7 @@
 import pytesseract
 from pdf2image import convert_from_path
 from pathlib import Path
-from src.document_reader.document_logger import document_logger
+from src.logger.document_reader import document_logger
 
 INPUT_PDF = Path("../inputs/file.pdf")
 OUTPUT_TXT = Path("../loaded_data/output.txt")

@@ -33,7 +33,7 @@ Follow the instructions below to install the necessary tools on **Windows**, **L
 #### Additional Resources:
 - Ollama GitHub: [https://github.com/ollama/ollama](https://github.com/ollama/ollama)  
 - Model Library: [https://ollama.com/library](https://ollama.com/library)
-
+- Model Leaderboard: [Model Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/)  
 ---
 
 ### ✅ Final Verification

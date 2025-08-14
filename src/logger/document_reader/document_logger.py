@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-
+from src.config import PROJECT_ROOT
 import colorlog
 import os
 
@@ -16,6 +16,7 @@ document_logger.setLevel(
 if not document_logger.handlers:
     # Define color scheme for console output
     log_colors = {
+        'DEBUG': "cyan",
         'INFO': 'green',
         'WARNING': 'yellow',
         'ERROR': 'red',
@@ -34,7 +35,7 @@ if not document_logger.handlers:
     console_handler.setFormatter(color_formatter)
 
     # File handler (plain text)
-    log_file_path = os.getenv("DOCUMENT_LOG_FILE", Path("../logs/document_reading.log"))
+    log_file_path = Path(os.getenv("DOCUMENT_LOG_FILE", PROJECT_ROOT / "logs" / "document_reading.log"))
     file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     file_handler = logging.FileHandler(log_file_path, mode='a', encoding='utf-8')
     file_handler.setFormatter(file_formatter)

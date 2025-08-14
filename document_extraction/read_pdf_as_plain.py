@@ -154,4 +154,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # python .\document_extraction\read_pdf_as_plain.py "..\inputs\HRCTofTheLung.pdf" "../data/extracted_jsons"

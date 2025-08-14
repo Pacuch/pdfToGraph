@@ -6,7 +6,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 import fitz
-from typing import Union
+from typing import Union, Optional
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent  # project folder
 if str(PROJECT_ROOT) not in sys.path:
@@ -84,18 +84,19 @@ def save_content_to_file(content: Union[str, dict, list], file_path: Union[Path,
 
 def read_pdf_as_plain(
         file_path: Union[Path, str],
+        output_dir: Union[Path, str] = "./",
         start_page: int = None,
         end_page: int = None,
-        output_dir: Union[Path, str] = "./"
-) -> None:
+
+) -> Optional[defaultdict]:
     """
     Reads a PDF safely without executing JavaScript and prints text content.
 
     Parameters:
         file_path: Path to the PDF file.
+        output_dir: dir path to save as JSON
         start_page: 1-based page number to start from (None = start of document).
         end_page: 1-based page number to end at (inclusive) (None = end of document).
-        output_dir: dir path to save as JSON
     """
 
     file_path = Path(file_path)
@@ -112,8 +113,8 @@ def read_pdf_as_plain(
         start = max(0, min(start, total_pages - 1))
         end = max(1, min(end, total_pages))
 
-        data = defaultdict(list)
-        data["title"] = file_path.stem
+        content = defaultdict(list)
+        content["title"] = file_path.stem
 
         for page_num in range(start, end):
             page = doc[page_num]
@@ -131,12 +132,13 @@ def read_pdf_as_plain(
             }
 
             # Append page data to the "pages" list
-            data["pages"].append(page_data)
+            content["pages"].append(page_data)
 
         # Write everything to JSON at once
         output_file = Path(output_dir) / f"{file_path.stem}.json"
-        save_content_to_file(data, output_file)
+        save_content_to_file(content, output_file)
 
+        return content
 
 def main():
     parser = argparse.ArgumentParser(

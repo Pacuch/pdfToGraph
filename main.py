@@ -53,6 +53,23 @@ Instructions for the model (must be followed):
 # prompt = f"{first_page_content} \n {questions}"
 prompt = questions
 
-response = generate_response(client, model, prompt)
+# response = generate_response(client, model, prompt)
 
-print(f"Response from Ollama \n{response.response}")
+# print(f"Response from Ollama \n{response.response}")
+
+
+import mysql.connector
+
+conn = mysql.connector.connect(
+    host="127.0.0.1",
+    user="user",
+    password="UserP@ssword",
+    database="entity_linking",
+    port=3306
+)
+
+cursor = conn.cursor()
+cursor.execute("SHOW TABLES;")
+print(cursor.fetchall())
+print("after fetchall")
+conn.close()

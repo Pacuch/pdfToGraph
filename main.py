@@ -29,22 +29,26 @@ def generate_response(client, model, prompt):
     """
     return client.generate(model=model, prompt=prompt)
 
-model = "qwen_multiple_sentence_to_graph"
+model = "llama3.2-3B-graph"
 
-file_path = "inputs/Multiple_sentences.pdf"
+file_path = "inputs/Mult_sentences.pdf"
 output_dir = "data/extracted_jsons"
 
 file = read_pdf_as_plain(file_path, output_dir)
 
 first_page_content = file['pages'][0]['content']
 
-questions = f"""
-INPUT_TEXT:
+questions = f'''
+Sentences:
 {first_page_content}
 
-TASK:
-Parse INPUT_TEXT and produce a single JSON object following the OUTPUT SCHEMA defined in the SYSTEM message. Parse all sentences (1–100), deduplicate nodes across sentences when clearly the same entity, create relationships and parameterized Cypher to MERGE nodes and relationships, provide cypher_params, list all clues with sentence_index and spans, run cross-sentence validation checks, and reconstruct each input sentence from the graph. Do not output anything except the single JSON object.
-"""
+Instructions for the model (must be followed):
+- Produce the five outputs in order (NODES_JSON, RELATIONS_JSON).
+- Generate a CYPHER creation of the nodes and relations provided above.
+- Use the rules in the SYSTEM message for labels, ids, date parsing, and Cypher generation.
+- Keep everything minimal and machine-parseable.
+- Output now.
+'''
 
 # prompt = f"{first_page_content} \n {questions}"
 prompt = questions
